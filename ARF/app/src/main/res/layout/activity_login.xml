@@ -2,17 +2,19 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_arf"
+    android:background="@drawable/background_inicio"
+    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment_login">
+    tools:context=".LoginActivity">
+
 
     <TextView
-        android:id="@+id/emailtextView"
+        android:id="@+id/correo_txt_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="148dp"
         android:layout_marginEnd="8dp"
         android:text="Correo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,11 +23,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/pwdtextView"
+        android:id="@+id/pwd_txt_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="232dp"
         android:layout_marginEnd="8dp"
         android:text="Contraseña"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,45 +36,79 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/usrText"
+        android:id="@+id/correo_usr_login"
         android:layout_width="217dp"
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="172dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="ejemplo@email.com"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/pwdText"
+        android:id="@+id/pwd_usr_login"
         android:layout_width="220dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="256dp"
+        android:layout_marginBottom="272dp"
         android:ems="10"
         android:hint="*****************"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnAcceso"
+        android:id="@+id/btn_acceso_login"
         android:layout_width="110dp"
         android:layout_height="40dp"
         android:layout_marginStart="68dp"
-        android:layout_marginBottom="184dp"
+        android:layout_marginBottom="204dp"
         android:text="Acceso"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_salir_login"
+        android:layout_width="107dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="204dp"
+        android:text="Salir"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!--Button
+        android:id="@+id/btnSalir"
+        android:layout_width="107dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="184dp"
+        android:text="Registro"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+
+        android:layout_width="93dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="28dp"
+        android:text="Salir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintStart_toStartOf="parent"/-->
 
 </android.support.constraint.ConstraintLayout>

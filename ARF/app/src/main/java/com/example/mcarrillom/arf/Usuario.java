@@ -12,6 +12,11 @@ public class Usuario {
         this.correo =  correo;
         this.password =  pass;
     }
+
+    public  static String getAccesoUsuario(){
+        String estado = new String("");
+        return estado;
+    }
     public String getNombre() {
         return nombre;
     }
