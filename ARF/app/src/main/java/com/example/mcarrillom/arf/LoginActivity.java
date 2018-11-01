@@ -29,11 +29,12 @@ public class LoginActivity extends AppCompatActivity {
         btnAcceso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                statusLogin = enviarDatos(correoUsr.getText().toString(),passUsr.getText().toString());
+                consumirServicioAWS();
+                /*statusLogin = enviarDatos(correoUsr.getText().toString(),passUsr.getText().toString());
                 if(statusLogin){
                     iniciarSession(correoUsr.getText().toString());
                 }else
-                    imprimirMensaje("Error, intente nuevamente!");
+                    imprimirMensaje("Error, intente nuevamente!");*/
             }
         });
 
@@ -48,8 +49,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public boolean enviarDatos( String usr, String pwd ) {
 
-        String mensaje = new String("procesando : " + usr + " : " + pwd);
-        imprimirMensaje(mensaje);
+        //Crear Json
+
+
+        //String mensaje = new String("procesando : " + usr + " : " + pwd);
+        //imprimirMensaje(mensaje);
         if(new String("gerardo@paquete.mx").equals(usr) && new String("root").equals(pwd))
             return true;
         else
@@ -67,6 +71,13 @@ public class LoginActivity extends AppCompatActivity {
     public void iniciarSession(String nombreUsr){
         Intent intent = new Intent(this,SessionActivity.class);
         startActivity(intent);
+    }
+
+    public void consumirServicioAWS(){
+        String url = "https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-login";
+        ServicioAWS servicioAWS = new ServicioAWS(this,url);
+        servicioAWS.execute();
+        iniciarSession(correoUsr.getText().toString());
     }
 
 }
