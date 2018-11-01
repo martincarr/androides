@@ -34,8 +34,6 @@ public class fragment_login extends Fragment implements Response.Listener<JSONOb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflamos el fragment en la activity
-        //return inflater.inflate(R.layout.fragment_login, container, false);
         View vista_arf = inflater.inflate(R.layout.fragment_login, container, false);
         usrLoginARF = vista_arf.findViewById(R.id.usrText);
         pwdLoginARF = vista_arf.findViewById(R.id.pwdText);

@@ -17,5 +17,6 @@ public class SessionActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, textBienvenida, time);
         toast.show();
 
+
     }
 }

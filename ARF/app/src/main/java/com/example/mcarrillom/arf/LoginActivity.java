@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String mensaje = new String("procesando : " + usr + " : " + pwd);
         imprimirMensaje(mensaje);
-        if(new String("martin@paquete.mx").equals(usr) && new String("admin").equals(pwd))
+        if(new String("gerardo@paquete.mx").equals(usr) && new String("root").equals(pwd))
             return true;
         else
             return false;
