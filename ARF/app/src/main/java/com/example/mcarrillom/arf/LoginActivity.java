@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         String url = "https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-login";
         ServicioAWS servicioAWS = new ServicioAWS(this,url);
         servicioAWS.execute();
-        iniciarSession(correoUsr.getText().toString());
+        //iniciarSession(correoUsr.getText().toString());
     }
 
 }
