@@ -2,7 +2,6 @@ package com.example.mcarrillom.arf;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnAcceso;
     private EditText correoUsr;
     private EditText passUsr;
-    private boolean statusLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +27,8 @@ public class LoginActivity extends AppCompatActivity {
         btnAcceso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(correoUsr.getText().toString()+passUsr.getText().toString());
                 consumirServicioAWS();
-                /*statusLogin = enviarDatos(correoUsr.getText().toString(),passUsr.getText().toString());
-                if(statusLogin){
-                    iniciarSession(correoUsr.getText().toString());
-                }else
-                    imprimirMensaje("Error, intente nuevamente!");*/
             }
         });
 
@@ -47,19 +41,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public boolean enviarDatos( String usr, String pwd ) {
-
-        //Crear Json
-
-
-        //String mensaje = new String("procesando : " + usr + " : " + pwd);
-        //imprimirMensaje(mensaje);
-        if(new String("gerardo@paquete.mx").equals(usr) && new String("root").equals(pwd))
-            return true;
-        else
-            return false;
-    }
-
     public void imprimirMensaje(String mensaje){
         Context context = getApplicationContext();
         CharSequence text = mensaje;
@@ -68,16 +49,17 @@ public class LoginActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void iniciarSession(String nombreUsr){
-        Intent intent = new Intent(this,SessionActivity.class);
-        startActivity(intent);
+    public void iniciarSession() {
+        Intent intent = new Intent(this, SessionActivity.class);
+         startActivity(intent);
     }
 
     public void consumirServicioAWS(){
         String url = "https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-login";
-        ServicioAWS servicioAWS = new ServicioAWS(this,url);
-        servicioAWS.execute();
-        //iniciarSession(correoUsr.getText().toString());
+        ServicioAWS servicioAWS = new ServicioAWS(this,url,correoUsr.getText().toString(),passUsr.getText().toString());
+        String respuesta = String.valueOf(servicioAWS.execute());
+        //System.out.println(respuesta);
+        iniciarSession();
     }
 
 }

@@ -1,11 +1,15 @@
 package com.example.mcarrillom.arf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+//import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -22,17 +25,20 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ServicioAWS extends AsyncTask<Void,Void,String>  {
 
-    //variables thread
+    //variables hilo
     private Context http;
-    //ProgressDialog pDialog;
     public String resultado_api = "";
     public String respuesta_api = "";
+    public String usuario = "";
+    public String password = "";
 
     //constructor asyntask
-    public ServicioAWS (Context context,String request_api){
-        Toast.makeText(context,request_api,Toast.LENGTH_LONG).show(); //imprimimos request
+    public ServicioAWS (Context context,String request_api, String usuario, String password){
+        //Toast.makeText(context,request_api,Toast.LENGTH_LONG).show(); //imprimimos request
         this.http = context;
         this.respuesta_api = request_api;
+        this.usuario = usuario;
+        this.password = password;
     }
 
     //json->string
@@ -49,23 +55,22 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             resultado.append("=");
             resultado.append(URLEncoder.encode(value.toString(),"UTF-8"));
         }
-        System.out.println(resultado.toString());
+        //System.out.println(resultado.toString());
         return resultado.toString();
     }
-
 
     @Override
     protected String doInBackground(Void... params) {
         String URLendPont= respuesta_api;
         String resultado="";
-        //Void data = params[1]; //data to post
         OutputStream out = null;
 
         try {
             URL url = new URL(URLendPont);
             JSONObject paramsPost = new JSONObject();
-            paramsPost.put("username", "martin@arf.mx");
-            paramsPost.put("password", "admin");
+            System.out.println("post :"+this.usuario+" "+this.password);
+            paramsPost.put("username", this.usuario);
+            paramsPost.put("password", this.password);
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setReadTimeout(3000);
             urlConnection.setConnectTimeout(3000);
@@ -82,17 +87,18 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             int codigoResp = urlConnection.getResponseCode();
             urlConnection.connect();
             if (codigoResp == HttpsURLConnection.HTTP_OK) {
-                System.out.println("Conexion ARF exitosa con API GATEWAY! Código: "+codigoResp);
+                //System.out.println("Conexion ARF exitosa con API GATEWAY! Código: "+codigoResp);
                 BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuffer sb = new StringBuffer();
                 String renglon = "";
                 while ((renglon = in.readLine()) != null) {
                     sb.append(renglon);
-                    System.out.println(sb.append(renglon).toString());
+                    //System.out.println(sb.append(renglon).toString());
                     break;
                 }
                 in.close();
                 resultado = sb.toString();
+                return resultado;
             } else
                 resultado = new String("Error :" + codigoResp);
 
@@ -106,6 +112,23 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
                 e.printStackTrace();
             }
         return resultado;
+    }
+
+    @Override
+    protected void onPreExecute(){
+        super.onPreExecute();
+    }
+
+    //aws request
+    @Override
+    protected  void onPostExecute(String cad){
+        super.onPostExecute(cad);
+        resultado_api=cad;
+        Toast.makeText(http,resultado_api,Toast.LENGTH_LONG).show(); //imprimimos request
+    }
+
+}
+
         /*String resultado="";
         String URLendPont= respuesta_api;
         URL url=null;
@@ -128,8 +151,8 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             wr.flush();
             wr.close();
             outs.close();*/
-            //edo conexion
-            //*****
+//edo conexion
+//*****
             /*if(codigoResp==HttpURLConnection.HTTP_OK){
                 BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuffer sb= new StringBuffer();
@@ -155,23 +178,3 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
         }
         System.out.println(resultado);
         return resultado;*/
-    }
-
-
-    @Override
-    protected void onPreExecute(){
-        super.onPreExecute();
-        //pDialog = ProgressDialog.show(http,"Procesando Solicitud","Procesando...");
-    }
-
-    //aws request
-    @Override
-    protected  void onPostExecute(String cad){
-        super.onPostExecute(cad);
-        //pDialog.dismiss();
-        resultado_api=cad;
-        Toast.makeText(http,resultado_api,Toast.LENGTH_LONG).show(); //imprimimos request
-    }
-
-
-}

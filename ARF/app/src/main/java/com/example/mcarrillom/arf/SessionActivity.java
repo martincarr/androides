@@ -7,6 +7,10 @@ import android.widget.Toast;
 
 public class SessionActivity extends AppCompatActivity {
 
+    public void SessionActivity(){
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,7 +18,7 @@ public class SessionActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         CharSequence textBienvenida = "Bienvenido!";
         int time = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, textBienvenida, time);
-        toast.show();
+        //Toast toast = Toast.makeText(context, textBienvenida, time);
+        //toast.show();
     }
 }
