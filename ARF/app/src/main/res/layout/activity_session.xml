@@ -8,4 +8,13 @@
     android:layout_height="match_parent"
     tools:context=".SessionActivity">
 
+    <TextView
+        android:id="@+id/mensajeSaul"
+        android:layout_width="178dp"
+        android:layout_height="41dp"
+        android:text="aqui rifate saul"
+        android:textSize="22sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="250dp" />
 </android.support.constraint.ConstraintLayout>

@@ -15,10 +15,5 @@ public class SessionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
-        Context context = getApplicationContext();
-        CharSequence textBienvenida = "Bienvenido!";
-        int time = Toast.LENGTH_SHORT;
-        //Toast toast = Toast.makeText(context, textBienvenida, time);
-        //toast.show();
     }
 }

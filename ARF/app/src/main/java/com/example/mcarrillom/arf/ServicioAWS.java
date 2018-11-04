@@ -1,12 +1,7 @@
 package com.example.mcarrillom.arf;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-//import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -128,53 +123,3 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
     }
 
 }
-
-        /*String resultado="";
-        String URLendPont= respuesta_api;
-        URL url=null;
-        try{
-            url = new URL(URLendPont); //conexion con api gateway
-            HttpsURLConnection urlConnection = (HttpsURLConnection)url.openConnection();
-            JSONObject paramsPost = new JSONObject();
-            paramsPost.put("username","martin@arf.mx");
-            paramsPost.put("password","admin");
-            //inicializa conexion
-            urlConnection.setReadTimeout(3000);
-            urlConnection.setConnectTimeout(3000);
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setDoInput(true);
-            urlConnection.setDoOutput(true);
-            //req
-            OutputStream outs =urlConnection.getOutputStream();
-            BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(outs,"UTF-8"));
-            wr.write(getPost(paramsPost));
-            wr.flush();
-            wr.close();
-            outs.close();*/
-//edo conexion
-//*****
-            /*if(codigoResp==HttpURLConnection.HTTP_OK){
-                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuffer sb= new StringBuffer();
-                String renglon="";
-                while((renglon=in.readLine())!=null){
-                    sb.append(renglon);
-                    break;
-                }
-                in.close();
-                resultado=sb.toString();
-            }else{
-                resultado=new String("Error :"+codigoResp);
-            }
-
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(resultado);
-        return resultado;*/

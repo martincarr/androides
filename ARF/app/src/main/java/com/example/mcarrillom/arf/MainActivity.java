@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 getRegistro();
             }
         });
-        //FragmentManager fm = getSupportFragmentManager();
-        //fm.beginTransaction().replace(R.id.activity_arf,new fragment_login()).commit();
-        //Toast.makeText(this, "Augmented Reality Furniture", Toast.LENGTH_SHORT).show();
     }
 
     public void getAcceso(){
