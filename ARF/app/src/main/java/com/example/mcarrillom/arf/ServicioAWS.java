@@ -20,20 +20,19 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class ServicioAWS extends AsyncTask<Void,Void,String>  {
 
-    //variables hilo
     private Context http;
-    public String resultado_api = "";
-    public String respuesta_api = "";
-    public String usuario = "";
-    public String password = "";
+    private String respuesta_aws = "";
+    private String url_aws = "";
+    private String usuario = "";
+    private String password = "";
 
     //constructor asyntask
     public ServicioAWS (Context context,String request_api, String usuario, String password){
         //Toast.makeText(context,request_api,Toast.LENGTH_LONG).show(); //imprimimos request
-        this.http = context;
-        this.respuesta_api = request_api;
-        this.usuario = usuario;
-        this.password = password;
+        this.setHttp(context);
+        this.setUrl_aws(request_api);
+        this.setUsuario(usuario);
+        this.setPassword(password);
     }
 
     //json->string
@@ -50,22 +49,22 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             resultado.append("=");
             resultado.append(URLEncoder.encode(value.toString(),"UTF-8"));
         }
-        //System.out.println(resultado.toString());
+        System.out.println(resultado.toString());
         return resultado.toString();
     }
 
     @Override
     protected String doInBackground(Void... params) {
-        String URLendPont= respuesta_api;
+        String URLendPont= this.getUrl_aws();
         String resultado="";
         OutputStream out = null;
 
         try {
             URL url = new URL(URLendPont);
             JSONObject paramsPost = new JSONObject();
-            System.out.println("post :"+this.usuario+" "+this.password);
-            paramsPost.put("username", this.usuario);
-            paramsPost.put("password", this.password);
+            System.out.println("post :"+ this.getUsuario() +" "+ this.getPassword());
+            paramsPost.put("username", this.getUsuario());
+            paramsPost.put("password", this.getPassword());
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setReadTimeout(3000);
             urlConnection.setConnectTimeout(3000);
@@ -82,13 +81,13 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             int codigoResp = urlConnection.getResponseCode();
             urlConnection.connect();
             if (codigoResp == HttpsURLConnection.HTTP_OK) {
-                //System.out.println("Conexion ARF exitosa con API GATEWAY! Código: "+codigoResp);
+                System.out.println("Conexion ARF exitosa con API GATEWAY! Código: "+codigoResp);
                 BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuffer sb = new StringBuffer();
                 String renglon = "";
                 while ((renglon = in.readLine()) != null) {
                     sb.append(renglon);
-                    //System.out.println(sb.append(renglon).toString());
+                    System.out.println(sb.append(renglon).toString());
                     break;
                 }
                 in.close();
@@ -118,8 +117,47 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
     @Override
     protected  void onPostExecute(String cad){
         super.onPostExecute(cad);
-        resultado_api=cad;
-        Toast.makeText(http,resultado_api,Toast.LENGTH_LONG).show(); //imprimimos request
+        this.setRespuesta_aws(cad);
+        Toast.makeText(getHttp(), getRespuesta_aws(),Toast.LENGTH_LONG).show(); //imprimimos request
     }
 
+    public Context getHttp() {
+        return http;
+    }
+
+    public void setHttp(Context http) {
+        this.http = http;
+    }
+
+    public String getRespuesta_aws() {
+        return respuesta_aws;
+    }
+
+    public void setRespuesta_aws(String respuesta_aws) {
+        this.respuesta_aws = respuesta_aws;
+    }
+
+    public String getUrl_aws() {
+        return url_aws;
+    }
+
+    public void setUrl_aws(String url_aws) {
+        this.url_aws = url_aws;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
