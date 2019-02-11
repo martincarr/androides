@@ -14,6 +14,11 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnAcceso;
     private EditText correoUsr;
     private EditText passUsr;
+    private ServicioAWS servicioAWS;
+    private String url_aws;
+    private static int codigo_aws;
+    private static String usurario_aws;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +32,14 @@ public class LoginActivity extends AppCompatActivity {
         btnAcceso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(correoUsr.getText().toString()+passUsr.getText().toString());
-                consumirServicioAWS();
+                boolean resp =consumirServicioAWS();
+                /*System.out.println("RESPUESTA KSJDNCLSJKDNLCJS: "+LoginActivity.getCodigo_aws());
+                if (resp == true){
+                    iniciarSessionAWS();
+                }
+                else{
+                    System.out.println("Error en la autenticacion!!");
+                }*/
             }
         });
 
@@ -49,17 +60,52 @@ public class LoginActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void iniciarSession() {
-        Intent intent = new Intent(this, SessionActivity.class);
-         startActivity(intent);
+    public boolean consumirServicioAWS(){
+        this.setUrl_aws("https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-login");
+        this.setServicioAWS(new ServicioAWS(this, this.getUrl_aws(),correoUsr.getText().toString(),passUsr.getText().toString()));
+        this.getServicioAWS().execute();
+        if( LoginActivity.getCodigo_aws() == 1004){
+            iniciarSessionAWS();
+            //return true;
+        }
+        System.out.println("Error en codigo de respuesta: "+ this.getCodigo_aws());
+        return false;
     }
 
-    public void consumirServicioAWS(){
-        String url = "https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-login";
-        ServicioAWS servicioAWS = new ServicioAWS(this,url,correoUsr.getText().toString(),passUsr.getText().toString());
-        String respuesta = String.valueOf(servicioAWS.execute());
-        System.out.println(respuesta);
-        iniciarSession();
+    public void iniciarSessionAWS(){
+            Intent intent = new Intent(this,SessionActivity.class);
+            startActivity(intent);
     }
 
+    public ServicioAWS getServicioAWS() {
+        return servicioAWS;
+    }
+
+    public void setServicioAWS(ServicioAWS servicioAWS) {
+        this.servicioAWS = servicioAWS;
+    }
+
+    public String getUrl_aws() {
+        return url_aws;
+    }
+
+    public void setUrl_aws(String url_aws) {
+        this.url_aws = url_aws;
+    }
+
+    public static int getCodigo_aws() {
+        return codigo_aws;
+    }
+
+    public static void setCodigo_aws(int codigo_aws) {
+        LoginActivity.codigo_aws = codigo_aws;
+    }
+
+    public static String getUsurario_aws() {
+        return usurario_aws;
+    }
+
+    public static void setUsurario_aws(String usurario_aws) {
+        LoginActivity.usurario_aws = usurario_aws;
+    }
 }

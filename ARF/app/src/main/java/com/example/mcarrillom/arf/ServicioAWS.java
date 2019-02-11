@@ -25,14 +25,17 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
     private String url_aws = "";
     private String usuario = "";
     private String password = "";
+    private int codigo_aws;
+    private JSONObject json_aws;
 
     //constructor asyntask
     public ServicioAWS (Context context,String request_api, String usuario, String password){
-        //Toast.makeText(context,request_api,Toast.LENGTH_LONG).show(); //imprimimos request
         this.setHttp(context);
         this.setUrl_aws(request_api);
         this.setUsuario(usuario);
         this.setPassword(password);
+        this.setCodigo_aws(0);
+        this.setRespuesta_aws("");
     }
 
     //json->string
@@ -66,8 +69,8 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             paramsPost.put("username", this.getUsuario());
             paramsPost.put("password", this.getPassword());
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(3000);
-            urlConnection.setConnectTimeout(3000);
+            urlConnection.setReadTimeout(5000);
+            urlConnection.setConnectTimeout(5000);
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
@@ -81,13 +84,26 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             int codigoResp = urlConnection.getResponseCode();
             urlConnection.connect();
             if (codigoResp == HttpsURLConnection.HTTP_OK) {
-                System.out.println("Conexion ARF exitosa con API GATEWAY! Código: "+codigoResp);
+                //System.out.println("Conexion ARF exitosa con API GATEWAY! Código: "+codigoResp+"OK");
+                //this.setCodigo_aws(codigoResp);
+                //System.out.println(this.getCodigo_aws());
+
                 BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuffer sb = new StringBuffer();
                 String renglon = "";
                 while ((renglon = in.readLine()) != null) {
                     sb.append(renglon);
-                    System.out.println(sb.append(renglon).toString());
+                    this.json_aws = new JSONObject(sb.toString());
+                    int code = this.json_aws.getInt("code");
+                    LoginActivity.setCodigo_aws(code);
+                    this.setCodigo_aws(code);
+                    //System.out.println("CODE: "+this.getCodigo_aws());
+                    JSONObject user_aws = this.json_aws.getJSONObject("user");
+                    String user_aws_name = user_aws.getString("name");
+                    LoginActivity.setUsurario_aws(user_aws_name);
+                    this.setUsuario(user_aws_name);
+                    //System.out.println(" USER_NAME: "+user_aws_name);
+                    //System.out.println(sb.append(renglon).toString());
                     break;
                 }
                 in.close();
@@ -118,7 +134,8 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
     protected  void onPostExecute(String cad){
         super.onPostExecute(cad);
         this.setRespuesta_aws(cad);
-        Toast.makeText(getHttp(), getRespuesta_aws(),Toast.LENGTH_LONG).show(); //imprimimos request
+        //System.out.println("onPOST: "+this.getRespuesta_aws()+"CODE: "+this.getCodigo_aws());
+        Toast.makeText(getHttp(), this.getRespuesta_aws(),Toast.LENGTH_LONG).show(); //imprimimos request
     }
 
     public Context getHttp() {
@@ -159,5 +176,13 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getCodigo_aws() {
+        return codigo_aws;
+    }
+
+    public void setCodigo_aws(int codigo_aws) {
+        this.codigo_aws = codigo_aws;
     }
 }
