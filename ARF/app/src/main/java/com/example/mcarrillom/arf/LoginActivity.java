@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     private ServicioAWS servicioAWS;
     private String url_aws;
     private static int codigo_aws;
-    private static String usurario_aws;
+    private static String usuario_aws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,18 +28,20 @@ public class LoginActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btn_salir_login);
         correoUsr = findViewById(R.id.correo_usr_login);
         passUsr = findViewById(R.id.pwd_usr_login);
+        this.setCodigo_aws(-1);
+        this.setUsuario_aws("");
 
         btnAcceso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean resp =consumirServicioAWS();
-                /*System.out.println("RESPUESTA KSJDNCLSJKDNLCJS: "+LoginActivity.getCodigo_aws());
-                if (resp == true){
+                consumirServicioAWS();
+                if (LoginActivity.getCodigo_aws() == 1004){
                     iniciarSessionAWS();
+                    imprimirMensaje("Bienvenido "+LoginActivity.getUsuario_aws()+" !");
                 }
                 else{
-                    System.out.println("Error en la autenticacion!!");
-                }*/
+                    imprimirMensaje("Error en la validación!");
+                }
             }
         });
 
@@ -60,16 +62,10 @@ public class LoginActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public boolean consumirServicioAWS(){
+    public void consumirServicioAWS(){
         this.setUrl_aws("https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-login");
         this.setServicioAWS(new ServicioAWS(this, this.getUrl_aws(),correoUsr.getText().toString(),passUsr.getText().toString()));
         this.getServicioAWS().execute();
-        if( LoginActivity.getCodigo_aws() == 1004){
-            iniciarSessionAWS();
-            //return true;
-        }
-        System.out.println("Error en codigo de respuesta: "+ this.getCodigo_aws());
-        return false;
     }
 
     public void iniciarSessionAWS(){
@@ -101,11 +97,11 @@ public class LoginActivity extends AppCompatActivity {
         LoginActivity.codigo_aws = codigo_aws;
     }
 
-    public static String getUsurario_aws() {
-        return usurario_aws;
+    public static String getUsuario_aws() {
+        return usuario_aws;
     }
 
-    public static void setUsurario_aws(String usurario_aws) {
-        LoginActivity.usurario_aws = usurario_aws;
+    public static void setUsuario_aws(String usuario_aws ) {
+        LoginActivity.usuario_aws = usuario_aws;
     }
 }

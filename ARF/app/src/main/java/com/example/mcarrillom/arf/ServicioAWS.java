@@ -2,7 +2,6 @@ package com.example.mcarrillom.arf;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedOutputStream;
@@ -25,7 +24,7 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
     private String url_aws = "";
     private String usuario = "";
     private String password = "";
-    private int codigo_aws;
+    private static int codigo_aws;
     private JSONObject json_aws;
 
     //constructor asyntask
@@ -69,8 +68,8 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             paramsPost.put("username", this.getUsuario());
             paramsPost.put("password", this.getPassword());
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(5000);
-            urlConnection.setConnectTimeout(5000);
+            urlConnection.setReadTimeout(3000);
+            urlConnection.setConnectTimeout(3000);
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
@@ -81,13 +80,8 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             writer.flush();
             writer.close();
             out.close();
-            int codigoResp = urlConnection.getResponseCode();
             urlConnection.connect();
-            if (codigoResp == HttpsURLConnection.HTTP_OK) {
-                //System.out.println("Conexion ARF exitosa con API GATEWAY! Código: "+codigoResp+"OK");
-                //this.setCodigo_aws(codigoResp);
-                //System.out.println(this.getCodigo_aws());
-
+            if ( urlConnection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuffer sb = new StringBuffer();
                 String renglon = "";
@@ -97,30 +91,27 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
                     int code = this.json_aws.getInt("code");
                     LoginActivity.setCodigo_aws(code);
                     this.setCodigo_aws(code);
-                    //System.out.println("CODE: "+this.getCodigo_aws());
                     JSONObject user_aws = this.json_aws.getJSONObject("user");
                     String user_aws_name = user_aws.getString("name");
-                    LoginActivity.setUsurario_aws(user_aws_name);
+                    LoginActivity.setUsuario_aws(user_aws_name);
                     this.setUsuario(user_aws_name);
-                    //System.out.println(" USER_NAME: "+user_aws_name);
-                    //System.out.println(sb.append(renglon).toString());
                     break;
                 }
                 in.close();
                 resultado = sb.toString();
                 return resultado;
             } else
-                resultado = new String("Error :" + codigoResp);
+                resultado = new String("Error :" + urlConnection.getResponseCode());
 
         }catch (MalformedURLException e){
                 e.printStackTrace();
-            } catch (IOException e) {
+        } catch (IOException e) {
                 e.printStackTrace();
-            } catch (JSONException e) {
+        } catch (JSONException e) {
                 e.printStackTrace();
-            } catch (Exception e) {
+        } catch (Exception e) {
                 e.printStackTrace();
-            }
+        }
         return resultado;
     }
 
@@ -134,8 +125,9 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
     protected  void onPostExecute(String cad){
         super.onPostExecute(cad);
         this.setRespuesta_aws(cad);
-        //System.out.println("onPOST: "+this.getRespuesta_aws()+"CODE: "+this.getCodigo_aws());
-        Toast.makeText(getHttp(), this.getRespuesta_aws(),Toast.LENGTH_LONG).show(); //imprimimos request
+        System.out.println("onPOST: "+this.getRespuesta_aws()+"CODE: "+this.getCodigo_aws());
+        System.out.println("USER_LOGIN: "+LoginActivity.getUsuario_aws().toString()+" CODIGO : "+ LoginActivity.getCodigo_aws());
+        //Toast.makeText(getHttp(), this.getRespuesta_aws(),Toast.LENGTH_LONG).show();
     }
 
     public Context getHttp() {
