@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_inicio"
+    android:background="@drawable/w_07"
     android:id="@+id/activity_registro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,123 +10,154 @@
 
     <TextView
         android:id="@+id/correo_usr_reg"
-        android:layout_width="59dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="Correo"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/correo_usr_reg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.21"
+        app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/nombre_usr_reg"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/pwdtextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="32dp"
         android:text="Contraseña"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/pwd_usr_reg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.227"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/correo_usr_reg"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
-        android:id="@+id/pwd_usr_reg"
-        android:layout_width="217dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="244dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/correo_usr_reg"
+        android:layout_width="242dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="52dp"
+        android:background="@color/colorPrimaryDark"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="ejemplo@email.com"
+        android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/nombre_usr_reg" />
 
     <EditText
-        android:id="@+id/pwdText"
-        android:layout_width="220dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="208dp"
+        android:id="@+id/pwd_usr_reg"
+        android:layout_width="242dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="*****************"
         android:inputType="textPassword"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correo_usr_reg"
+        app:layout_constraintVertical_bias="0.037" />
 
     <Button
         android:id="@+id/btn_acceso_reg"
-        android:layout_width="110dp"
+        android:layout_width="107dp"
         android:layout_height="40dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="8dp"
         android:text="REGISTRAR"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pwd_usr_reg"
+        app:layout_constraintVertical_bias="0.309" />
 
     <Button
         android:id="@+id/btn_regresar_reg"
         android:layout_width="107dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginStart="8dp"
         android:text="Regresar"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintStart_toEndOf="@+id/btn_acceso_reg"
+        app:layout_constraintTop_toBottomOf="@+id/pwd_usr_reg"
+        app:layout_constraintVertical_bias="0.3" />
 
     <TextView
         android:id="@+id/nombre_usr_reg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="36dp"
         android:text="Nombre:"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintHorizontal_bias="0.216"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/header_txt_reg" />
 
     <EditText
         android:id="@+id/nombre_usr_reg"
-        android:layout_width="217dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="172dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="242dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="56dp"
+        android:background="@color/colorPrimaryDark"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="nombre"
+        android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/header_txt_reg" />
 
     <TextView
         android:id="@+id/header_txt_reg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="14dp"
-        android:text="Ingrese sus datos para registro."
+        android:layout_height="21dp"
+        android:layout_marginTop="124dp"
+        android:text="Ingrese información de registro"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="REGISTRAR CUENTA"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/header_txt_reg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
