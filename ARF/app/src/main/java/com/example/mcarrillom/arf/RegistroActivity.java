@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static android.os.SystemClock.sleep;
 
 public class RegistroActivity extends AppCompatActivity {
@@ -37,11 +41,19 @@ public class RegistroActivity extends AppCompatActivity {
         btnRegistrarUsr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                consumirServicioAWS();
-                if (RegistroActivity.getCodigo_aws() == 1003){
-                    imprimirMensaje(RegistroActivity.getMensajeRegistro());
-                }
-                else{
+
+                final String cadena_nombre = editTextNombre.getText().toString();
+                final String cadena_email = editTextCorreo.getText().toString();
+                final String cadena_pass = editTextPass.getText().toString();
+
+                if(!validarNombre(cadena_nombre)){
+                    editTextNombre.setError("Nombre no válido!");
+                }else if(!validarCorreo(cadena_email)){
+                    editTextCorreo.setError("Correo no válido!");
+                }else if(!validarPassword(cadena_pass)){
+                    editTextPass.setError("Contraseña no válida!");
+                } else {
+                    consumirServicioAWS();
                     imprimirMensaje(RegistroActivity.getMensajeRegistro());
                 }
             }
@@ -56,15 +68,35 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
-    public void consumirServicioAWS(){
-        if( (editTextNombre.getText().toString() != "") || (editTextCorreo.getText().toString() != "") || (editTextPass.getText().toString() != "") ){
+    private boolean validarNombre(String nombre){
+        String PATRON_NOMBRE = "^[a-zA-ZÀ-ÿ\\u00f1\\u00d1]+(\\s*[a-zA-ZÀ-ÿ\\u00f1\\u00d1]*)*[a-zA-ZÀ-ÿ\\u00f1\\u00d1]+$";
+        Pattern patron = Pattern.compile(PATRON_NOMBRE);
+        Matcher matcher =  patron.matcher(nombre);
+        return matcher.matches();
+    }
+
+    private boolean validarCorreo(String correo){
+        String PATRON_CORREO = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+        Pattern patron = Pattern.compile(PATRON_CORREO);
+        Matcher matcher =  patron.matcher(correo);
+        return matcher.matches();
+    }
+
+    private boolean validarPassword(String pass) {
+        String PATRON_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        Pattern patron = Pattern.compile(PATRON_PASSWORD);
+        Matcher matcher = patron.matcher(pass);
+        return matcher.matches();
+    }
+
+
+        public void consumirServicioAWS(){
+        System.out.println("DATOS EN CONSUMO DE WEB SERVICE REGISTRO "+editTextNombre.getText().toString()+" "+ editTextCorreo.getText().toString()+" "+editTextPass.getText().toString());
+        //if( (editTextNombre.getText().toString() != "") && (editTextCorreo.getText().toString() != "") && (editTextPass.getText().toString() != "") ){
             this.setUrl_aws("https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-register");
             this.setRegistroAWS(new RegistroAWS(this, this.getUrl_aws(),editTextNombre.getText().toString(),editTextCorreo.getText().toString(),editTextPass.getText().toString()));
             this.getRegistroAWS().execute();
             sleep(4000);
-        }else{
-            imprimirMensaje("Datos incompletos!");
-        }
     }
 
     public void imprimirMensaje(String mensaje){

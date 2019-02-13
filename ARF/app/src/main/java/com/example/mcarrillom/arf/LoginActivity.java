@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                     imprimirMensaje("Bienvenido "+LoginActivity.getUsuario_aws()+" !");
                 }
                 else{
-                    imprimirMensaje("Error en la validación!");
+                    imprimirMensaje("Usuario no encontrado, verifique sus datos!");
                 }
             }
         });
