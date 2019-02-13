@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import static android.os.SystemClock.sleep;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnLogout;
@@ -66,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         this.setUrl_aws("https://0kg5bbzwbc.execute-api.us-west-2.amazonaws.com/dev/arf-login");
         this.setServicioAWS(new ServicioAWS(this, this.getUrl_aws(),correoUsr.getText().toString(),passUsr.getText().toString()));
         this.getServicioAWS().execute();
+        sleep(4000);
     }
 
     public void iniciarSessionAWS(){

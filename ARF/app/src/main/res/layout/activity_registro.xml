@@ -9,7 +9,7 @@
     tools:context=".RegistroActivity">
 
     <TextView
-        android:id="@+id/correo_usr_reg"
+        android:id="@+id/correo_usr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/pwdtextView"
+        android:id="@+id/pwd_usr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -42,7 +42,7 @@
         android:id="@+id/correo_usr_reg"
         android:layout_width="242dp"
         android:layout_height="42dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="288dp"
         android:background="@color/colorPrimaryDark"
         android:ems="10"
         android:inputType="textPersonName"
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre_usr_reg" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/pwd_usr_reg"
@@ -101,10 +101,10 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
-        android:id="@+id/nombre_usr_reg"
+        android:id="@+id/nombre_usr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:text="Nombre:"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -116,8 +116,8 @@
     <EditText
         android:id="@+id/nombre_usr_reg"
         android:layout_width="242dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="56dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="52dp"
         android:background="@color/colorPrimaryDark"
         android:ems="10"
         android:inputType="textPersonName"
@@ -127,7 +127,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_txt_reg" />
+        app:layout_constraintTop_toBottomOf="@+id/header_txt_reg"
+        tools:id="nombreUsuario" />
 
     <TextView
         android:id="@+id/header_txt_reg"

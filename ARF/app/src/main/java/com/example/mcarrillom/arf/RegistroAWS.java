@@ -1,5 +1,4 @@
 package com.example.mcarrillom.arf;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import org.json.JSONException;
@@ -17,20 +16,22 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import javax.net.ssl.HttpsURLConnection;
 
-public class ServicioAWS extends AsyncTask<Void,Void,String>  {
+public class RegistroAWS extends AsyncTask<Void,Void,String>  {
 
     private Context http;
     private String respuesta_aws = "";
     private String url_aws = "";
-    private String usuario = "";
+    private String nombre = "";
+    private String correo = "";
     private String password = "";
     private static int codigo_aws;
     private JSONObject json_aws;
 
-    public ServicioAWS (Context context,String request_api, String usuario, String password){
+    public RegistroAWS (Context context, String request_api, String nombre, String correo, String password){
         this.setHttp(context);
         this.setUrl_aws(request_api);
-        this.setUsuario(usuario);
+        this.setNombre(nombre);
+        this.setCorreo(correo);
         this.setPassword(password);
         this.setCodigo_aws(0);
         this.setRespuesta_aws("");
@@ -50,7 +51,7 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
             resultado.append("=");
             resultado.append(URLEncoder.encode(value.toString(),"UTF-8"));
         }
-        System.out.println(resultado.toString());
+        //System.out.println(resultado.toString());
         return resultado.toString();
     }
 
@@ -63,9 +64,10 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
         try {
             URL url = new URL(URLendPont);
             JSONObject paramsPost = new JSONObject();
-            System.out.println("post :"+ this.getUsuario() +" "+ this.getPassword());
-            paramsPost.put("username", this.getUsuario());
+            System.out.println("post :"+this.getNombre() +" "+ this.getCorreo() +" "+ this.getPassword());
+            paramsPost.put("username", this.getCorreo());
             paramsPost.put("password", this.getPassword());
+            paramsPost.put("name", this.getNombre());
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
             urlConnection.setReadTimeout(3000);
             urlConnection.setConnectTimeout(3000);
@@ -88,12 +90,10 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
                     sb.append(renglon);
                     this.json_aws = new JSONObject(sb.toString());
                     int code = this.json_aws.getInt("code");
-                    LoginActivity.setCodigo_aws(code);
+                    String mensaje =  this.json_aws.getString("message");
+                    RegistroActivity.setCodigo_aws(code);
+                    RegistroActivity.setMensajeRegistro(mensaje);
                     this.setCodigo_aws(code);
-                    JSONObject user_aws = this.json_aws.getJSONObject("user");
-                    String user_aws_name = user_aws.getString("name");
-                    LoginActivity.setUsuario_aws(user_aws_name);
-                    this.setUsuario(user_aws_name);
                     break;
                 }
                 in.close();
@@ -103,13 +103,13 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
                 resultado = new String("Error :" + urlConnection.getResponseCode());
 
         }catch (MalformedURLException e){
-                e.printStackTrace();
+            e.printStackTrace();
         } catch (IOException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } catch (JSONException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
         return resultado;
     }
@@ -125,8 +125,7 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
         super.onPostExecute(cad);
         this.setRespuesta_aws(cad);
         System.out.println("onPOST: "+this.getRespuesta_aws()+"CODE: "+this.getCodigo_aws());
-        System.out.println("USER_LOGIN: "+LoginActivity.getUsuario_aws().toString()+" CODIGO : "+ LoginActivity.getCodigo_aws());
-        //Toast.makeText(getHttp(), this.getRespuesta_aws(),Toast.LENGTH_LONG).show();
+        System.out.println("USER_LOGIN: "+LoginActivity.getUsuario_aws()+" CODIGO : "+ LoginActivity.getCodigo_aws());
     }
 
     public Context getHttp() {
@@ -153,12 +152,12 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
         this.url_aws = url_aws;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getPassword() {
@@ -175,5 +174,13 @@ public class ServicioAWS extends AsyncTask<Void,Void,String>  {
 
     public void setCodigo_aws(int codigo_aws) {
         this.codigo_aws = codigo_aws;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }
